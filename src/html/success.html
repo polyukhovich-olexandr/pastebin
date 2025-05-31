@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Complete - Transfer</title>
+    <link rel="stylesheet" href="../css/success.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../../public/images/upload.png" altTransfer Logo" class="logo-icon">
+                <span>Transfer</span>
+            </div>
+            <button class="new-upload-btn" id="newUploadBtn">
+                New Upload
+            </button>
+        </header>
+
+        <div class="success-container">
+            <div class="success-header">
+                <i class="fas fa-check-circle success-icon"></i>
+                <h2>Upload Complete</h2>
+            </div>
+            
+            <div class="upload-info">
+                <div class="info-row">
+                    <div class="info-label">URL:</div>
+                    <div class="info-value" id="urlValue">
+                        <a href="google.com" id="urlText"></a>
+                        <button class="copy-btn" id="copyBtn">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">ID:</div>
+                    <div class="info-value" id="bucketId"></div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Created at:</div>
+                    <div class="info-value" id="createdAt"></div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Expires in:</div>
+                    <div class="info-value" id="expiresIn"></div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Protected:</div>
+                    <div class="info-value">
+                        <span id="protectedStatus"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/success.js"></script>
+</body>
+</html>

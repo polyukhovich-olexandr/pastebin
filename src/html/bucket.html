@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer - View Bucket</title>
+    <link rel="stylesheet" href="../css/bucket.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../../public/images/upload.png" alt="TTransfer Logo" class="logo-icon">
+                <span>Transfer</span>
+            </div>
+            <button class="new-upload-btn" onclick="window.location.href='/'">
+                New Upload
+            </button>
+        </header>
+
+        <div class="content">
+
+            <div class="files-section">
+                <div class="files-header">
+                    <i class="fas fa-file-alt"></i> Shared Files
+                </div>
+                
+                <div class="file-list-container">
+                    <div class="file-list" id="fileList"></div>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <div class="settings-header">
+                    <i class="fas fa-info-circle"></i> Info
+                </div>
+                <div class="settings-content">
+                    <div class="bucket-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Created:</span>
+                            <span id="createdAt">-</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Expires:</span>
+                            <span id="expiresAt">-</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Remaining:</span>
+                            <span id="remainingTime">-</span>
+                        </div>
+                    </div>
+                    
+                    <div id="passwordForm" class="setting-group" style="display: none;">
+                        <label>Password required</label>
+                        <div class="password-input">
+                            <input type="password" id="passwordInput" placeholder="Enter password" class="visible-password">
+                            <span class="key-icon">🔑</span>
+                        </div>
+                        <button class="new-upload-btn" id="submitPassword" style="width: 100%; margin-top: 10px;">
+                            Submit
+                        </button>
+                    </div>
+                    
+                    <div id="downloadOptions" style="display: none; margin-top: 20px;">
+                        <div class="download-options">
+                            <a href="#" class="download-all-btn" id="downloadZip">
+                                <i class="fas fa-file-archive"></i> Download ZIP
+                            </a>
+                            <a href="#" class="download-all-btn" id="downloadTar">
+                                <i class="fas fa-file-archive"></i> Download TAR.GZ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/bucket.js"></script>
+    <script>
+        function updateRemainingTime(expiresAt) {
+            function update() {
+                const now = new Date();
+                const expires = new Date(expiresAt);
+                const diff = expires - now;
+                
+                if (diff <= 0) {
+                    document.getElementById('remainingTime').textContent = 'Expired';
+                    return;
+                }
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.getElementById('remainingTime').textContent = 
+                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+            
+            update();
+            setInterval(update, 1000);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.bucketData && window.bucketData.expires_at) {
+                updateRemainingTime(window.bucketData.expires_at);
+            }
+        });
+    </script>
+</body>
+</html>

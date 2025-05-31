@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../../public/images/upload.png" alt="Transfer Logo" class="logo-icon">
+                <span>Transfer</span>
+            </div>
+            <button class="new-upload-btn">
+                New Upload
+            </button>
+        </header>
+
+        <div class="content">
+
+            <div class="files-section" id="filesSection">
+                <div class="files-header">
+                    <i class="fas fa-file-alt"></i> Files
+                </div>
+                
+                <div class="file-list-container">
+                    <div class="drop-zone" id="dropZone">
+                        <input type="file" id="fileInput" multiple>
+                        <div class="drop-content" id="dropContent">
+                            <div class="plus-icon">+</div>
+                            <p>Drop your files here or click to select</p>
+                        </div>
+                    </div>
+                    <div class="file-list" id="fileList"></div>
+                </div>
+                
+                <div class="add-more-btn-container" id="addMoreContainer">
+                    <button class="add-more-btn" id="addMoreBtn">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <div class="settings-header">
+                    <i class="fas fa-cog"></i> Settings
+                </div>
+                <div class="settings-content">
+                    <div class="setting-group">
+                        <label>Retention</label>
+                        <select id="retentionSelect">
+                            <option value="1h">1 hour</option>
+                            <option value="6h" selected>6 hours</option>
+                            <option value="1d">1 day</option>
+                            <option value="3d">3 days</option>
+                            <option value="7d">1 week</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label>Password <span class="optional">(optional)</span></label>
+                        <div class="password-input">
+                            <input type="text" id="passwordField" placeholder="Set password" class="visible-password">
+                            <span class="key-icon">🔑</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="upload-btn" id="uploadBtn">
+                    <img src="../../public/images/file_upload.png" alt="Upload" class="upload-icon">
+                    Upload
+                </button>
+            </div>
+        </div>
+
+        <div class="global-drop-overlay" id="globalDropOverlay">
+            <img src="../../public/images/drag-and-drop.png" alt="Drop files" class="global-drop-icon">
+        </div>
+    </div>
+
+    <script src="../js/user.js"></script>
+</body>
+</html>
