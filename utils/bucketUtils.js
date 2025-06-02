@@ -12,19 +12,23 @@ async function checkAndCleanExpiredBucket(bucketId) {
             [bucketId]
         );
 
-        if (!bucket) return { exists: false };
+        if (!bucket) {
+            await connection.rollback();
+            return { exists: false };
+        }
 
         const isExpired = new Date(bucket.expires_at) <= new Date();
-        if (!isExpired) return { exists: true, expired: false };
+        if (!isExpired) {
+            await connection.rollback();
+            return { exists: true, expired: false };
+        }
 
-        
         const [files] = await connection.execute(
             `SELECT stored_name FROM files WHERE bucket_id = ?`,
             [bucket.id]
         );
 
-        
-        files.forEach(file => {
+        for (const file of files) {
             const filePath = path.join(__dirname, '../private/uploads', file.stored_name);
             try {
                 if (fs.existsSync(filePath)) {
@@ -33,14 +37,14 @@ async function checkAndCleanExpiredBucket(bucketId) {
             } catch (err) {
                 console.error(`Error deleting file ${filePath}:`, err);
             }
-        });
+        }
 
-        
         await connection.execute(`DELETE FROM files WHERE bucket_id = ?`, [bucket.id]);
         await connection.execute(`DELETE FROM buckets WHERE id = ?`, [bucket.id]);
 
         await connection.commit();
         return { exists: true, expired: true, deleted: true };
+
     } catch (err) {
         await connection.rollback();
         console.error('Error cleaning expired bucket:', err);

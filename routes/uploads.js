@@ -54,25 +54,26 @@ async function cleanupExpiredBuckets() {
 
         const bucketIds = expiredBuckets.map(b => b.id);
 
+        const placeholders = bucketIds.map(() => '?').join(', ');
         const [filesToDelete] = await connection.execute(
-            `SELECT stored_name FROM files WHERE bucket_id IN (?)`,
-            [bucketIds]
+            `SELECT stored_name FROM files WHERE bucket_id IN (${placeholders})`,
+            bucketIds
         );
-
+        
         const fileNames = filesToDelete.map(f => f.stored_name);
 
         await deleteFilesFromDisk(fileNames);
 
         await connection.execute(
-            `DELETE FROM files WHERE bucket_id IN (?)`,
-            [bucketIds]
+            `DELETE FROM files WHERE bucket_id IN (${placeholders})`,
+            bucketIds
         );
-
+        
         await connection.execute(
-            `DELETE FROM buckets WHERE id IN (?)`,
-            [bucketIds]
+            `DELETE FROM buckets WHERE id IN (${placeholders})`,
+            bucketIds
         );
-
+        
         await connection.commit();
         console.log(`Successfully cleaned up ${bucketIds.length} expired buckets and ${fileNames.length} files`);
     } catch (error) {
