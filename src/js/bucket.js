@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadFiles();
 
     async function loadFiles() {
-        if (bucketData?.password_hash) {
+        if (bucketData?.has_password) {
             await loadFilesWithToken();
         } else {
             await loadFilesWithoutToken();
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="file-actions">
                         ${
-                            bucketData?.password_hash
+                            bucketData?.has_password
                             ? `<button class="file-view-btn" data-stored-name="${file.stored_name}"><i class="fas fa-eye"></i></button>
                                <button class="file-download-btn" data-stored-name="${file.stored_name}"><i class="fas fa-download"></i></button>`
                             : `<a href="/b/${bucketId}/${file.stored_name}/view" target="_blank" rel="noopener noreferrer" class="file-view-btn"><i class="fas fa-eye"></i></a>
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fileList.addEventListener('click', (e) => {
         const viewBtn = e.target.closest('.file-view-btn');
         if (viewBtn) {
-            if (bucketData?.password_hash) {
+            if (bucketData?.has_password) {
                 const storedName = viewBtn.getAttribute('data-stored-name');
                 fetchFile(`/b/${bucketId}/${storedName}/view`, true);
                 return;
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const downloadBtn = e.target.closest('.file-download-btn');
         if (downloadBtn) {
-            if (bucketData?.password_hash) {
+            if (bucketData?.has_password) {
                 const storedName = downloadBtn.getAttribute('data-stored-name');
                 fetchFile(`/b/${bucketId}/${storedName}/download`, true);
                 return;
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('downloadZip')?.addEventListener('click', (e) => {
         e.preventDefault();
         let url = `/b/${bucketId}/download?format=zip`;
-        if (bucketData?.password_hash && accessToken) {
+        if (bucketData?.has_password && accessToken) {
             fetchFile(url, true);
         } else {
             window.location.href = url;
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('downloadTar')?.addEventListener('click', (e) => {
         e.preventDefault();
         let url = `/b/${bucketId}/download?format=tar.gz`;
-        if (bucketData?.password_hash && accessToken) {
+        if (bucketData?.has_password && accessToken) {
             fetchFile(url, true);
         } else {
             window.location.href = url;

@@ -88,11 +88,19 @@ router.get('/b/:bucketId', async (req, res) => {
         const htmlPath = path.join(__dirname, '../src/html/bucket.html');
         let html = fs.readFileSync(htmlPath, 'utf8');
         
+        const bucketDataForFrontend = {
+            url: bucket.url,
+            created_at: bucket.created_at,
+            expires_at: bucket.expires_at,
+            has_password: !!bucket.password_hash
+        };
+        
         const scripts = `
             <script>
-                window.bucketData = ${JSON.stringify(bucket)};
+                window.bucketData = ${JSON.stringify(bucketDataForFrontend)};
             </script>
         `;
+        
         html = html.replace('</body>', `${scripts}</body>`);
 
         res.setHeader('Content-Type', 'text/html');
