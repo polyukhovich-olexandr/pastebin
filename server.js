@@ -49,7 +49,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/404', (req, res) => {
-    res.status(403).sendFile(path.join(__dirname, 'src/html/404.html'));
+    res.status(404).sendFile(path.join(__dirname, 'src/html/404.html'));
 });
 
 app.use((err, req, res, next) => {
