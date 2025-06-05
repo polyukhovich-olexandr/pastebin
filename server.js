@@ -48,11 +48,15 @@ app.use((req, res, next) => {
     res.status(403).redirect('/403');
 });
 
+app.get('/404', (req, res) => {
+    res.status(403).sendFile(path.join(__dirname, 'src/html/404.html'));
+});
+
 app.use((err, req, res, next) => {
     console.error('Global error handler:', err);
     
     if (err.status === 403) {
-        return res.redirect('/403');
+        return res.redirect('/404');
     }    
     res.status(500).send('Internal Server Error');
 });
