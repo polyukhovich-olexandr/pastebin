@@ -39,7 +39,7 @@ router.get('/b/:bucket/:file/download', async (req, res, next) => {
             return res.status(403).redirect('/403');
         }
         if (!bucketStatus.exists) {
-            return res.status(404).redirect('/403');
+            return res.status(404).redirect('/404');
         }
         
         const [[bucket]] = await db.execute(
@@ -62,14 +62,14 @@ router.get('/b/:bucket/:file/download', async (req, res, next) => {
 
         if (!file) {
             console.log('File not found');
-            return res.status(404).redirect('/403');
+            return res.status(404).redirect('/404');
         }
 
         const filePath = path.join(__dirname, '../private/uploads', storedName);
 
         if (!fs.existsSync(filePath)) {
             console.log('File path does not exist:', filePath);
-            return res.status(404).redirect('/403');
+            return res.status(404).redirect('/404');
         }
 
         res.download(filePath, file.original_name);
@@ -90,7 +90,7 @@ router.get('/b/:bucket/:file/view', async (req, res, next) => {
             return res.status(403).redirect('/403');
         }
         if (!bucketStatus.exists) {
-            return res.status(404).redirect('/403');
+            return res.status(404).redirect('/404');
         }
         
         const [[bucket]] = await db.execute(
@@ -99,7 +99,7 @@ router.get('/b/:bucket/:file/view', async (req, res, next) => {
         );
 
         if (!bucket) {
-            return res.status(404).redirect('/403');
+            return res.status(404).redirect('/404');
         }
 
         if (bucket.password_hash && !(await verifyToken(bucketUrl, token))) {
@@ -112,13 +112,13 @@ router.get('/b/:bucket/:file/view', async (req, res, next) => {
         );
 
         if (!file) {
-            return res.status(404).redirect('/403');
+            return res.status(404).redirect('/404');
         }
 
         const filePath = path.join(__dirname, '../private/uploads', storedName);
 
         if (!fs.existsSync(filePath)) {
-            return res.status(404).redirect('/403');
+            return res.status(404).redirect('/404');
         }
 
         const mimeType = mime.lookup(file.original_name) || 'application/octet-stream';
@@ -142,7 +142,7 @@ router.get('/b/:bucket/download', async (req, res, next) => {
             return res.status(403).redirect('/403');
         }
         if (!bucketStatus.exists) {
-            return res.status(404).redirect('/403');
+            return res.status(404).redirect('/404');
         }
         
         const [[bucket]] = await db.execute(
@@ -151,7 +151,7 @@ router.get('/b/:bucket/download', async (req, res, next) => {
         );
 
         if (!bucket) {
-            return res.status(404).redirect('/403');
+            return res.status(404).redirect('/404');
         }
 
         if (bucket.password_hash && !(await verifyToken(bucketUrl, token))) {
@@ -164,7 +164,7 @@ router.get('/b/:bucket/download', async (req, res, next) => {
         );
 
         if (!files || files.length === 0) {
-            return res.status(404).redirect('/403');
+            return res.status(404).redirect('/404');
         }
 
         let archive;

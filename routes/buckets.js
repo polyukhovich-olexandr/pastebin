@@ -26,7 +26,7 @@ router.get('/api/b/:bucketId/files', async (req, res, next) => {
             return res.status(403).redirect("/403");
         }
         if (!bucketStatus.exists) {
-            return res.status(404).redirect("/403");
+            return res.status(404).redirect("/404");
         }
                 
         const [bucket] = await db.execute(
@@ -71,7 +71,7 @@ router.get('/b/:bucketId', async (req, res) => {
             return res.status(403).redirect("/403");
         }
         if (!bucketStatus.exists) {
-            return res.status(404).redirect("/403");
+            return res.status(404).redirect("/404");
         }
         
         const [buckets] = await db.execute(
@@ -121,7 +121,7 @@ router.post('/api/b/:bucketId/verify', async (req, res) => {
             return res.status(403).redirect("/403");
         }
         if (!bucketStatus.exists) {
-            return res.status(404).redirect("/403");
+            return res.status(404).redirect("/404");
         }
 
         const [bucket] = await db.execute(
@@ -160,7 +160,7 @@ async function verifyToken(req, res, next) {
             return res.status(403).redirect("/403");
         }
         if (!bucketStatus.exists) {
-            return res.status(404).redirect("/403");
+            return res.status(404).redirect("/404");
         }
         
         const [result] = await db.execute(
