@@ -40,6 +40,10 @@ app.post('/api/upload', upload.array('files'), (req, res) => {
     res.json({ files: req.files });
 });
 
+app.get('/404', (req, res) => {
+    res.status(404).sendFile(path.join(__dirname, 'src/html/404.html'));
+});
+
 app.get('/403', (req, res) => {
     res.status(403).sendFile(path.join(__dirname, 'src/html/403.html'));
 });
@@ -48,16 +52,18 @@ app.use((req, res, next) => {
     res.status(403).redirect('/403');
 });
 
-app.get('/404', (req, res) => {
-    res.status(404).sendFile(path.join(__dirname, 'src/html/404.html'));
-});
 
 app.use((err, req, res, next) => {
     console.error('Global error handler:', err);
-    
+
     if (err.status === 403) {
-        return res.redirect('/404');
-    }    
+        return res.status(403).sendFile(path.join(__dirname, 'src/html/403.html'));
+    }
+
+    if (err.status === 404) {
+        return res.status(404).sendFile(path.join(__dirname, 'src/html/404.html'));
+    }
+
     res.status(500).send('Internal Server Error');
 });
 
