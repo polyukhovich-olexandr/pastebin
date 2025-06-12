@@ -13,12 +13,23 @@
 - Each file can be **up to 64 MB**  
 - No passwords, no logins, no moderation  
 
+---
 
 ## Tech Stack
 
-- Backend: `Javascript`
+- Backend: `Javascript` + `Express`
 - Frontend: `HTML`, `CSS`, `JavaScript`
 - Database: `MySQL`
+- Containerization: `Docker` + `Docker Compose`
+
+---
+
+## Requirements
+
+- [Docker](https://www.docker.com/) >= 20.x (tested with 28.1.1)
+- [Docker Compose](https://docs.docker.com/compose/) >= 1.29 (tested with 2.36.0)
+
+---
 
 ### **Build and run the app**
 
@@ -28,10 +39,14 @@ docker-compose up --build
 
 🌐 Expose the app at http://localhost:8080
 
+---
+
 ### **Stop the app**
 ```bash
 docker-compose down
 ```
+
+---
 
 ### **🐳 Quick Start with Docker**
 ```bash
