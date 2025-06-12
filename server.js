@@ -9,8 +9,6 @@ const upload = multer({ dest: 'private/' });
 const uploadRouter = require('./routes/uploads');
 const apiRoutes = require('./routes/api');
 
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));

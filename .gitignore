@@ -1,3 +1,4 @@
 node_modules
 private/uploads/*
 !private/uploads/.gitkeep
+file.txt

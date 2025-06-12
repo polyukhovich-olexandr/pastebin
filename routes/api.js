@@ -50,7 +50,7 @@ router.get('/api/b/:bucketId/files', async (req, res, next) => {
         );
 
         if (!bucket || bucket.length === 0) {
-            return res.redirect(`/403`);
+            return res.status(404).redirect(`/404`);
         }
 
         if (bucket[0].password_hash) {
